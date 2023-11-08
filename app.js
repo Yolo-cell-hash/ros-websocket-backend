@@ -4,7 +4,7 @@ const ROSLIB = require('roslib');
 
 const wss = new WebSocket.Server({ port: 9090 });
 const app = express();
-const port = 3000;
+const port = 9090;
 
 const clients = new Map();
 
