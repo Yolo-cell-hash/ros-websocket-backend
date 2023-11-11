@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data</title>
+    <title>ROS Data Display</title>
 </head>
 <body>
-    <h2>Data Dashboard</h2>
-    <form method="post">
-        <button type="submit">Submit</button>
-    </form>
-    
+    <h1>ROS Data Display</h1>
+    <p>Received data from ROS:</p>
+    <ul>
+        <% dataHistory.forEach(function(item, index) { %>
+            <li><h4><%= JSON.stringify(item, null, 2) %></h4></li>
+         <% }); %>
+     </ul>
 </body>
 </html>

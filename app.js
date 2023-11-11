@@ -10,23 +10,26 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', function (req, res) {
-    res.render('home');
-});
+
+let dataHistory = [];
 
 
 
 app.use(bodyParser.json());
 
-// Define a route to handle incoming data
 app.post('/', (req, res) => {
   const receivedData = req.body.data;
-  console.log('Received data from ROS:', receivedData);
-  // Handle the data as needed
+  dataHistory.push(receivedData);
 
-  // Send a response
-  res.status(200).send('Data received successfully');
+  // Render the EJS view with the received data
+  res.render('home',  { dataHistory: dataHistory });
 });
+
+app.get('/',function(req,res){
+  res.render('root');
+})
+
+
 
 // Start the backend server
 app.listen(port, () => {
