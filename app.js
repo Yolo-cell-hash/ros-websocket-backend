@@ -21,12 +21,20 @@ app.post('/', (req, res) => {
   const receivedData = req.body.data;
   dataHistory.push(receivedData);
 
+  res.redirect('/res');
+
   // Render the EJS view with the received data
-  res.render('home',  { dataHistory: dataHistory });
+  //res.render('home',  { dataHistory: dataHistory });
 });
+
+
 
 app.get('/',function(req,res){
   res.render('root');
+})
+
+app.get('/res',function(req,res){
+  res.render('home', { dataHistory: dataHistory });
 })
 
 

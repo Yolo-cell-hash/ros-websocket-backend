@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="4">
     <title>ROS Data Display</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
     <h1>ROS Data Display</h1>
     <p>Received data from ROS:</p>
-    <ul>
+    <ul id="relodContent">
         <% dataHistory.forEach(function(item, index) { %>
             <li><h4><%= JSON.stringify(item, null, 2) %></h4></li>
          <% }); %>
      </ul>
+
 </body>
 </html>
+
