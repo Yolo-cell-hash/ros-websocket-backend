@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT;
 
 
 app.set("view engine", "ejs");
@@ -36,7 +35,8 @@ app.get('/res',function(req,res){
 
 
 
-if(port == null || port ==""){
+let port = process.env.PORT;
+if (port == null || port == "") {
   port = 3000;
 }
 
