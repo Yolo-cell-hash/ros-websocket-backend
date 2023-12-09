@@ -1,43 +1,46 @@
-const rosnodejs = require('rosnodejs');
-const https = require('https'); // Use the 'https' module for secure connections
+const express = require('express');
+const bodyParser = require('body-parser');
 
-// Initialize ROS node
-rosnodejs.initNode('/ros_listener_node')
-  .then((rosNode) => {
-    // Create a ROS subscriber
-    const sub = rosNode.subscribe('/topic1', 'std_msgs/Float64', (data) => {
-      // Handle incoming data
-      sendDataToBackend(data);
-    });
+const app = express();
+let port = process.env.PORT;
 
-    // Function to send data to the Node.js backend
-    function sendDataToBackend(data) {
-      // Create a JSON payload with the data
-      const payload = JSON.stringify({ data: data });
 
-      // Configure the HTTP request options
-      const options = {
-        hostname: 'calm-pink-spider-tux.cyclic.app', // Update this line with your deployed website address
-        port: 443, // Default port for HTTPS
-        path: '/',
-        method: 'POST',
-        protocol: 'https:', // Set the protocol to 'https'
-        headers: {
-          'Content-Type': 'application/json',
-          'Content-Length': payload.length,
-        },
-      };
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-      // Send the data to the backend server using 'https'
-      const req = https.request(options, (res) => {
-        console.log(`Backend server responded with status code: ${res.statusCode}`);
-      });
 
-      req.on('error', (error) => {
-        console.error(`Error sending data to backend: ${error.message}`);
-      });
+let dataHistory = [];
 
-      req.write(payload);
-      req.end();
-    }
-  });
+
+
+app.use(bodyParser.json());
+
+app.post('/', (req, res) => {
+  const receivedData = req.body.data;
+  dataHistory.push(receivedData);
+
+  res.redirect('/res');
+});
+
+
+
+app.get('/',function(req,res){
+  res.render('root');
+})
+
+app.get('/res',function(req,res){
+  res.render('home', { dataHistory: dataHistory });
+})
+
+
+
+if(port == null || port ==""){
+  port = 3000;
+}
+
+// Start the backend server
+app.listen(port, () => {
+  console.log(`Backend server listening at http://localhost:${port}`);
+});
