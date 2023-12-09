@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
 
 
 app.set("view engine", "ejs");
@@ -22,9 +22,6 @@ app.post('/', (req, res) => {
   dataHistory.push(receivedData);
 
   res.redirect('/res');
-
-  // Render the EJS view with the received data
-  //res.render('home',  { dataHistory: dataHistory });
 });
 
 
@@ -38,6 +35,10 @@ app.get('/res',function(req,res){
 })
 
 
+
+if(port == null || port ==""){
+  port = 3000;
+}
 
 // Start the backend server
 app.listen(port, () => {
