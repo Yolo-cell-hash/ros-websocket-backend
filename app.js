@@ -11,7 +11,9 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cors({ origin: 'https://ill-pear-scorpion-vest.cyclic.app/' }));  // Replace with your actual frontend domain
+app.use(cors({ 
+  origin: ['https://ill-pear-scorpion-vest.cyclic.app', 'https://ill-pear-scorpion-vest.cyclic.app/res'],
+}));
 
 let dataHistory = [];
 
